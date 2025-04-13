@@ -9,29 +9,47 @@ from pytorch_tabnet.tab_model import TabNetClassifier
 import joblib
 import streamlit as st
 
+title = "This is title"
+
+st.set_page_config(    
+    page_title=f"{title}",
+    page_icon="⭕",
+    layout="wide"
+)
+
+# 设置标题
+st.markdown(f'''
+    <h1 style="font-size: 20px; text-align: center; color: black; border-bottom: 2px solid black; margin-bottom: 1rem;">
+    {title}
+    </h1>''', unsafe_allow_html=True)
+
 # 定义使用的特征变量
 var = [
     "Weight", "Charlson_Comorbidity_Index", "SOFA", "Heart_Rate",
-    "Resp_Rate", "Lactate", "Hematocrit", "Calcium", "Potassium", "WBC", "Albumin"
+    "Resp_Rate", "Lactate", "Hematocrit", "Calcium", "Potassium", 
+    "WBC", "Albumin"
 ]
 
-d = [float(i) for i in "78.4	10	6	137	33	0.9	29	0.92	3.4	5.9	2.9".split("\t")]
+# 初始值
+dinput = [float(i) for i in "78.4	10	6	137	33	0.9	29	0.92	3.4	5.9	2.9".split("\t")]
 
-df = pd.DataFrame([d], columns=var)
+d = {}
+col = st.columns(4)
+# 输入
+k = 0
+for i, j in zip(var, dinput):
+    d[i] = col[k%4].number_input(i, value=j)
+    k = k+1
+    
+# 输入值
+df = pd.DataFrame([d])
 
+# 导入模型
 m1 = joblib.load("preprocessor.pkl")
 m2 = joblib.load("tabnet_model.pkl")
 
+# 预处理输入数据
 d = m1.transform(df)
-st.write(d)
+st.dataframe(df, hide_index=True, use_container_width=True)
 
 st.write(m2.predict(d))
-
-# 2. 创建 SHAP 解释器  
-explainer = shap.Explainer(m2)  
-shap_values = explainer(d)  
-
-# 3. 绘制 SHAP 力图  
-shap.summary_plot(shap_values, d) 
-
-st.pyplot(plt.gcf())
