@@ -42,41 +42,39 @@ Potassium (mmol/L) ：0-20
 WBC (×10⁹/L)：0-100
 Albumin (g/L)：0-100""".splitlines()
 
+# 导入模型
+m1 = joblib.load("preprocessor.pkl")
+m2 = joblib.load("tabnet_model.pkl")
+
 var1 = [[i.split("：")[0], float(i.split("：")[1].split("-")[0]), float(i.split("：")[1].split("-")[1])] for i in var1]
 
 # 初始值
 dinput = [float(i) for i in "78.4	10	6	137	33	0.9	29	0.92	3.4	5.9	2.9".split("\t")]
 
+# 模型输入
 d = {}
 col = st.columns(4)
-# 输入
-exp = st.expander("**Current input:**")
-with exp:
+with st.expander("**Current input:**"):
     k = 0
     for i, j, m in zip(var, dinput, var1):
         d[i] = col[k%4].number_input(m[0], value=j, min_value=m[1], max_value=m[2], format="%0.2f")
         k = k+1
     
-# 输入值
-df = pd.DataFrame([d])
+    # 输入值
+    df = pd.DataFrame([d])
 
-# 导入模型
-m1 = joblib.load("preprocessor.pkl")
-m2 = joblib.load("tabnet_model.pkl")
+    # 预处理输入数据
+    d = m1.transform(df)
 
-# 预处理输入数据
-d = m1.transform(df)
-
-with exp:
     st.dataframe(df, hide_index=True, use_container_width=True)
     
 with st.expander("**Predict result:**"):
-    st.write(m2.predict(d))
-    st.write(m2.predict_proba(d))
+    res = m2.predict_proba(d)[0]
+    st.progress(round(float(res)*100, 2), f"Predict probability：{round(float(res)*100, 2)}%")
 
-st.markdown("""
-**Clinical Interpretation:**  
-* Low Risk (>70%): Standard monitoring  
-* Medium Risk (30-70%): Enhanced follow-up recommended  
-* High Risk (<30%): lmmediate clinical intervention advised  
-""")
+    st.markdown("""
+        **Clinical Interpretation:**  
+        * Low Risk (>70%): Standard monitoring  
+        * Medium Risk (30-70%): Enhanced follow-up recommended  
+        * High Risk (<30%): lmmediate clinical intervention advised  
+    """)
