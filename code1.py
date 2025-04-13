@@ -27,4 +27,4 @@ m2 = joblib.load("tabnet_model.pkl")
 d = m1.transform(df)
 st.write(d)
 
-#print(m2.predict(d))
+st.write(m2.predict(d))
