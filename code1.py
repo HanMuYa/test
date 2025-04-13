@@ -73,10 +73,13 @@ with st.expander("**Predict result:**", True):
     res = m2.predict_proba(d).flatten().tolist()[0]
     if res>0.7:
         r = "**:green[Low Risk]**"
+        r1 = "Low RisK"
     elif res < 0.3:
         r = "**:red[High Risk]**"
+        r1 = "High RisK"
     else:
-        r = "**:orange[Low Risk]**"
+        r1 = "Medium RisK"
+        r = "**:orange[Medium Risk]**"
 
     col = st.columns(2)
     col[0].metric("Predict probability", f"{round(res*100, 2)}%", border=True)
