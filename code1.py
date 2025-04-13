@@ -51,7 +51,7 @@ d = {}
 col = st.columns(4)
 # 输入
 exp = st.expander("**Current input:**")
-    with exp:
+with exp:
     k = 0
     for i, j, m in zip(var, dinput, var1):
         d[i] = col[k%4].number_input(m[0], value=j, min_value=m[1], max_value=m[2], format="%0.2f")
