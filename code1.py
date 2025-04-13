@@ -53,7 +53,7 @@ dinput = [float(i) for i in "78.4	10	6	137	33	0.9	29	0.92	3.4	5.9	2.9".split("\t
 
 # 模型输入
 d = {}
-with st.expander("**Current input:**"):
+with st.expander("**Current input:**", True):
     col = st.columns(4)
     
     k = 0
@@ -69,10 +69,8 @@ with st.expander("**Current input:**"):
 
     st.dataframe(df, hide_index=True, use_container_width=True)
     
-with st.expander("**Predict result:**"):
-    st.write(m2.predict_proba(d))
-    
-    res = m2.predict_proba(d)[0][0]
+with st.expander("**Predict result:**", True):
+    res = m2.predict_proba(d).values.flatten().tolist()[0]
     st.progress(round(float(res)*100, 2), f"Predict probability：{round(float(res)*100, 2)}%")
 
     st.markdown("""
