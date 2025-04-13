@@ -1,5 +1,5 @@
 scikit-learn
 pandas
 seaborn
-torch
-pytorch-tabnet
+torch==1.31.1+cpu
+pytorch-tabnet==3.1.1
