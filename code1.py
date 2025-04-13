@@ -71,8 +71,7 @@ with st.expander("**Current input:**", True):
     
 with st.expander("**Predict result:**", True):
     res = m2.predict_proba(d).flatten().tolist()[0]
-    st.write(res)
-    st.progress(round(res*100, 2), f"Predict probability：{round(res*100, 2)}%")
+    st.progress(res, f"Predict probability：{round(res*100, 2)}%")
 
     st.markdown("""
         **Clinical Interpretation:**  
