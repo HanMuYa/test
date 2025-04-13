@@ -71,11 +71,11 @@ with st.expander("**Current input:**", True):
     
 with st.expander("**Predict result:**", True):
     res = m2.predict_proba(d).flatten().tolist()[0]
-    st.progress(res, f"Predict probability：{round(res*100, 2)}%")
+    st.progress(res, f"**Predict probability：{round(res*100, 2)}%**")
 
     st.markdown("""
         **Clinical Interpretation:**  
-        * Low Risk (>70%): Standard monitoring  
-        * Medium Risk (30-70%): Enhanced follow-up recommended  
-        * High Risk (<30%): lmmediate clinical intervention advised  
+        * :green [Low Risk (>70%): Standard monitoring]  
+        * :orange [Medium Risk (30-70%): Enhanced follow-up recommended]  
+        * :red [High Risk (<30%): lmmediate clinical intervention advised]  
     """)
