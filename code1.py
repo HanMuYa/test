@@ -70,7 +70,7 @@ with st.expander("**Current input:**"):
     st.dataframe(df, hide_index=True, use_container_width=True)
     
 with st.expander("**Predict result:**"):
-    res = m2.predict_proba(d)[0]
+    res = m2.predict_proba(d)[0][0]
     st.progress(round(float(res)*100, 2), f"Predict probability：{round(float(res)*100, 2)}%")
 
     st.markdown("""
