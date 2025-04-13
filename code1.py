@@ -6,11 +6,8 @@ from sklearn.compose import ColumnTransformer
 from sklearn.metrics import roc_auc_score, roc_curve, classification_report
 import torch
 from pytorch_tabnet.tab_model import TabNetClassifier
-import matplotlib.pyplot as plt
-import seaborn as sns
 import joblib
 import streamlit as st
-import shap
 
 # 定义使用的特征变量
 var = [
