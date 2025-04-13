@@ -19,7 +19,7 @@ st.set_page_config(
 
 # 设置标题
 st.markdown(f'''
-    <h1 style="font-size: 20px; text-align: center; color: black; border-bottom: 2px solid black; margin-bottom: 1rem;">
+    <h1 style="font-size: 32px; text-align: center; color: black; border-bottom: 2px solid black; margin-bottom: 1rem;">
     {title}
     </h1>''', unsafe_allow_html=True)
 
@@ -30,16 +30,32 @@ var = [
     "WBC", "Albumin"
 ]
 
+var1 = """Weight (Kg)：0-200
+Charlson Comorbidity Index：0-15
+SOFA：0-24
+Heart rate (Beats/min)：0-300
+Respiratory rate (Breaths/min)：0-50
+Lactate (mmol/L)：0-20
+Hematocrit (%)：20-70
+Ionized calcium (mmol/L)：0-20
+Potassium (mmol/L) ：0-20
+WBC (×10⁹/L)：0-100
+Albumin (g/L)：0-100""".splitlines()
+
+var1 = [[i.split("：")[0], float(i.split("：")[1].split("-")[0]), float(i.split("：")[1].split("-")[1])] for i in var1]
+
 # 初始值
 dinput = [float(i) for i in "78.4	10	6	137	33	0.9	29	0.92	3.4	5.9	2.9".split("\t")]
 
 d = {}
 col = st.columns(4)
 # 输入
-k = 0
-for i, j in zip(var, dinput):
-    d[i] = col[k%4].number_input(i, value=j)
-    k = k+1
+exp = st.expander("**Current input:**")
+    with exp:
+    k = 0
+    for i, j, m in zip(var, dinput, var1):
+        d[i] = col[k%4].number_input(m[0], value=j, min_value=m[1], max_value=m[2], format="%0.2f")
+        k = k+1
     
 # 输入值
 df = pd.DataFrame([d])
@@ -50,6 +66,17 @@ m2 = joblib.load("tabnet_model.pkl")
 
 # 预处理输入数据
 d = m1.transform(df)
-st.dataframe(df, hide_index=True, use_container_width=True)
 
-st.write(m2.predict(d))
+with exp:
+    st.dataframe(df, hide_index=True, use_container_width=True)
+    
+with st.expander("**Predict result:**"):
+    st.write(m2.predict(d))
+    st.write(m2.predict_proba(d))
+
+st.markdown("""
+**Clinical Interpretation:**  
+* Low Risk (>70%): Standard monitoring  
+* Medium Risk (30-70%): Enhanced follow-up recommended  
+* High Risk (<30%): lmmediate clinical intervention advised  
+""")
