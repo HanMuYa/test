@@ -77,6 +77,11 @@ with st.expander("**Predict result:**", True):
         r = "**:red[High Risk]**"
     else:
         r = "**:orange[Low Risk]**"
+
+    col = st.columns(2)
+    col[0].metric("Predict probability", f"{round(res*100, 2)}%", border=True)
+    col[1].metric("Predict Risk level", f"{r}", border=True)
+    
     st.progress(res, f"**Predict probability：{round(res*100, 2)}%, {r}**")
 
     st.markdown("""
@@ -85,3 +90,5 @@ with st.expander("**Predict result:**", True):
         * :orange[Medium Risk (30-70%): Enhanced follow-up recommended]  
         * :red[High Risk (<30%): lmmediate clinical intervention advised]  
     """)
+
+    st.warning("**Note: This prediction tool supports but does not replace clinical judgment.**")
