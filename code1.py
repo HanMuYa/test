@@ -53,8 +53,9 @@ dinput = [float(i) for i in "78.4	10	6	137	33	0.9	29	0.92	3.4	5.9	2.9".split("\t
 
 # 模型输入
 d = {}
-col = st.columns(4)
 with st.expander("**Current input:**"):
+    col = st.columns(4)
+    
     k = 0
     for i, j, m in zip(var, dinput, var1):
         d[i] = col[k%4].number_input(m[0], value=j, min_value=m[1], max_value=m[2], format="%0.2f")
