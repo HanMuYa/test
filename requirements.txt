@@ -1,7 +1,5 @@
 scikit-learn
 pandas
 seaborn
-gpytorch
-pytorch-lightning
-pytorch-mutex
+torch
 pytorch-tabnet
