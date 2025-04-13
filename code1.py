@@ -83,7 +83,7 @@ with st.expander("**Predict result:**", True):
 
     col = st.columns(2)
     col[0].metric("Predict probability", f"{round(res*100, 2)}%", border=True)
-    col[1].metric("Predict Risk level", f"{r}", border=True)
+    col[1].metric("Predict Risk level", f"{r1}", border=True)
     
     st.progress(res, f"**Predict probability：{round(res*100, 2)}%, {r}**")
 
