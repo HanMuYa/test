@@ -75,7 +75,7 @@ with st.expander("**Predict result:**", True):
 
     st.markdown("""
         **Clinical Interpretation:**  
-        * :green[Low Risk (>70%): Standard monitoring]  
-        * :orange[Medium Risk (30-70%): Enhanced follow-up recommended]  
-        * :red[High Risk (<30%): lmmediate clinical intervention advised]  
+        * [ ]:green[Low Risk (>70%): Standard monitoring]  
+        * [x]:orange[Medium Risk (30-70%): Enhanced follow-up recommended]  
+        * [ ]:red[High Risk (<30%): lmmediate clinical intervention advised]  
     """)
