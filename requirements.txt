@@ -1,7 +1,7 @@
 scikit-learn
 pandas
 seaborn
-gpytorch==1.13
-pytorch-lightning==2.3.3
-pytorch-mutex==1.0
-pytorch-tabnet==3.1.1
+gpytorch
+pytorch-lightning
+pytorch-mutex
+pytorch-tabnet
