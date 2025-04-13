@@ -2,4 +2,4 @@ scikit-learn
 pandas
 seaborn
 torch
-pytorch-tabnet
+pytorch-tabnet==3.1.1
