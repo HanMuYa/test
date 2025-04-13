@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import joblib
 import streamlit as st
+import shap
 
 # 定义使用的特征变量
 var = [
@@ -28,3 +29,12 @@ d = m1.transform(df)
 st.write(d)
 
 st.write(m2.predict(d))
+
+# 2. 创建 SHAP 解释器  
+explainer = shap.Explainer(m2)  
+shap_values = explainer(d)  
+
+# 3. 绘制 SHAP 力图  
+shap.summary_plot(shap_values, d) 
+
+st.pyplot(plt.gcf())
