@@ -9,7 +9,7 @@ from pytorch_tabnet.tab_model import TabNetClassifier
 import joblib
 import streamlit as st
 
-title = "This is title"
+title = "Prediction of 30-Day Mortality in Critically Ill Patients with Bone Metastases"
 
 st.set_page_config(    
     page_title=f"{title}",
@@ -70,7 +70,7 @@ with st.expander("**Current input:**", True):
     st.dataframe(df, hide_index=True, use_container_width=True)
     
 with st.expander("**Predict result:**", True):
-    res = m2.predict_proba(d).flatten().tolist()[0]
+    res = m2.predict_proba(d).flatten().tolist()[1]
     if res>0.7:
         r = "**:green[Low Risk]**"
         r1 = "Low RisK"
@@ -89,9 +89,9 @@ with st.expander("**Predict result:**", True):
 
     st.markdown("""
         **Clinical Interpretation:**  
-        * :green[Low Risk (>70%): Standard monitoring]  
-        * :orange[Medium Risk (30-70%): Enhanced follow-up recommended]  
-        * :red[High Risk (<30%): lmmediate clinical intervention advised]  
+        * :green[Low Risk (<30%): Standard care and routine monitoring are appropriate.]  
+        * :orange[Medium Risk (30–70%): Intensified treatment and close monitoring are advised.]  
+        * :red[High Risk (>70%): Immediate critical care intervention is strongly recommended.]  
     """)
 
     st.warning("**Note: This prediction tool supports but does not replace clinical judgment.**")
