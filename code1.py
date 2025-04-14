@@ -71,10 +71,10 @@ with st.expander("**Current input:**", True):
     
 with st.expander("**Predict result:**", True):
     res = m2.predict_proba(d).flatten().tolist()[1]
-    if res>0.7:
+    if res < 0.3:
         r = "**:green[Low Risk]**"
         r1 = "Low RisK"
-    elif res < 0.3:
+    elif res > 0.7:
         r = "**:red[High Risk]**"
         r1 = "High RisK"
     else:
